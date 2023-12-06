@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Sign Up form</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Login</h1>
+        <form action="login.html" method="post">
+            <input type="text" placeholder="Username" id="username" name="username" oninput="validateUsername()" required>
+            <span class="err" id="error1"></span>
+            <input type="password" placeholder="Password" id="confirmPassword" name="confirmPassword" oninput="validate_password()" required>
+            <span class="err" id="error3"></span>
+            <div class="recover">
+                <center><a href="#">Forgot Password?</a></center>
+            </div>
+        </form>
+        <button>Sign Up</button>
+        <div class="member">
+            New User?<a href="signup.html">Register Here</a>
+        </div>
+    </div>
+<script>
+    function validateUsername() {
+        let username = document.getElementById('username').value;
+        
+        let usernamePattern = /^[A-Z][A-Za-z0-9]*\d.*$/;
+
+        if (usernamePattern.test(username)) {
+            document.getElementById('error1').innerHTML = "";
+            return true;
+        } else {
+            document.getElementById('error1').innerHTML = "*Username must start with a capital letter and contain at least one digit";
+            return false;
+        }
+    }
+    function validate_password() {
+        let password = document.getElementById('confirmPassword').value;
+        if (password.length == 0) {
+            document.getElementById('error3').innerHTML = "";
+        }
+        let uppercaseFlag = false;
+        let lowercaseFlag = false;
+        let specialCharFlag = false;
+        let excludedChars = ",.;:";
+        let specialChars = "!@#$%^&*()-_=+{}[]|'\"<>";
+
+        if (password.length < 8) {
+            document.getElementById('error3').innerHTML = "*Password must be at least 8 characters long";
+            return false;
+        }
+
+        for (let i = 0; i < password.length; i++) {
+            if (password[i] >= 'A' && password[i] <= 'Z') {
+                uppercaseFlag = true;
+            } else if (password[i] >= 'a' && password[i] <= 'z') {
+                lowercaseFlag = true;
+            } else if (specialChars.indexOf(password[i]) !== -1) {
+                specialCharFlag = true;
+            } else if (excludedChars.indexOf(password[i]) !== -1) {
+                document.getElementById('error3').innerHTML = "*Password must not contain , . ; :";
+                return false;
+            }
+        }
+
+        if (uppercaseFlag && lowercaseFlag && specialCharFlag) {
+            document.getElementById('error3').innerHTML = "";
+            return true;
+        } else {
+            document.getElementById('error3').innerHTML = "*Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 special character";
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
