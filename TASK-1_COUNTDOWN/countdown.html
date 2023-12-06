@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Countdown Timer</title>
+</head>
+<body>
+
+<div class="wrapper">
+    <h1>Countdown Timer</h1>
+    <div id="timer">00:00:00</div>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <button onclick="resetTimer()">Reset</button>
+</div>
+
+<script>
+  let timer;
+  let timeInSeconds = 180; // Set the initial time in seconds (e.g., 3 minutes)
+
+  function updateTimerDisplay() {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = timeInSeconds % 60;
+
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    document.getElementById('timer').innerText = formattedTime;
+  }
+
+  function startTimer() {
+    timer = setInterval(() => {
+      if (timeInSeconds > 0) {
+        timeInSeconds--;
+        updateTimerDisplay();
+      } else {
+        stopTimer();
+      }
+    }, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(timer);
+  }
+
+  function resetTimer() {
+    stopTimer();
+    timeInSeconds = 180; // Reset the timer to the initial time
+    updateTimerDisplay();
+  }
+
+  // Initial display
+  updateTimerDisplay();
+</script>
+
+</body>
+</html>
